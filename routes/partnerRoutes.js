@@ -7,11 +7,8 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   try {
     const partnerData = req.body;
-
-    // Save to MongoDB
     const partner = new Partner(partnerData);
     const savedPartner = await partner.save();
-
     res.status(201).json(savedPartner);
   } catch (err) {
     console.error("❌ Error saving partner:", err);

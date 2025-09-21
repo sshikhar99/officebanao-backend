@@ -1,22 +1,25 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import mongoose from "mongoose";
 import partnerRoutes from "./routes/partnerRoutes.js";
+import connectDB from "./db.js";
 
-dotenv.config();
+// ✅ Load .env only locally
+if (process.env.NODE_ENV !== "production") {
+  dotenv.config();
+}
 
 const app = express();
 
 // Parse JSON
 app.use(express.json());
 
-// ✅ CORS setup
+// CORS setup
 app.use(
   cors({
     origin: [
-      "http://localhost:3000", // React dev
-      "https://officebanao-frontend.vercel.app", // production
+      "http://localhost:3000",
+      "https://officebanao-frontend.vercel.app",
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -24,14 +27,8 @@ app.use(
 );
 app.options("*", cors()); // handle preflight
 
-// MongoDB Atlas connection
-mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("✅ MongoDB connected"))
-  .catch((err) => console.error("❌ MongoDB connection error:", err));
+// Connect to MongoDB
+connectDB();
 
 // Routes
 app.use("/api/partners", partnerRoutes);
@@ -39,5 +36,6 @@ app.use("/api/partners", partnerRoutes);
 // Test route
 app.get("/", (req, res) => res.send("Backend running 🚀"));
 
+// Start server
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

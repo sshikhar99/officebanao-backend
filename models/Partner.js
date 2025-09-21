@@ -3,13 +3,14 @@ import mongoose from "mongoose";
 const partnerSchema = new mongoose.Schema(
   {
     partnerType: { type: String, required: true }, // "vendor" or "designer"
-    companyName: String, // for vendor
+    // Vendor fields
+    companyName: String,
     contactPerson: String,
     email: { type: String, required: true },
     phone: String,
     services: String,
     location: String,
-    // Designer-specific fields
+    // Designer fields
     name: String,
     portfolio: String,
     experience: String,
