@@ -15,11 +15,10 @@ app.use(express.json());
 app.use(
   cors({
     origin: [
-      "http://localhost:3000",
-      "https://officebanao-frontend.vercel.app",
+      "*",
     ],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    methods: ["*"],
+    allowedHeaders: ["*"],
     credentials: true, // allows cookies if needed
   })
 );
