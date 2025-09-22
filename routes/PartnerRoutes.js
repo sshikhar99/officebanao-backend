@@ -3,26 +3,22 @@ import Partner from "../models/Partner.js";
 
 const router = express.Router();
 
-// Create a new partner
+// POST /api/partners
 router.post("/", async (req, res) => {
   try {
-    const partnerData = req.body;
-    const partner = new Partner(partnerData);
-    const savedPartner = await partner.save();
-    res.status(201).json(savedPartner);
-  } catch (err) {
-    console.error("❌ Error saving partner:", err);
-    res.status(500).json({ error: "Server error, could not save partner" });
-  }
-});
+    const { partnerType, companyName, contactPerson, email, phone, services, location } = req.body;
 
-// Optional: Get all partners
-router.get("/", async (req, res) => {
-  try {
-    const partners = await Partner.find().sort({ createdAt: -1 });
-    res.json(partners);
+    if (!partnerType || !companyName || !contactPerson || !email) {
+      return res.status(400).json({ message: "Required fields missing" });
+    }
+
+    const newPartner = new Partner({ partnerType, companyName, contactPerson, email, phone, services, location });
+    const savedPartner = await newPartner.save();
+
+    res.status(201).json({ message: "Partner saved successfully", partner: savedPartner });
   } catch (err) {
-    res.status(500).json({ error: "Server error" });
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
   }
 });
 

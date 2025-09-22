@@ -4,14 +4,15 @@ import dotenv from "dotenv";
 import partnerRoutes from "./routes/PartnerRoutes.js";
 import connectDB from "./db.js";
 
-// ✅ Load .env only locally
-if (process.env.NODE_ENV !== "production") {
-  dotenv.config();
-}
+// Load .env
+dotenv.config();
 
 const app = express();
 
-// Parse JSON
+// Connect MongoDB
+connectDB();
+
+// Middleware
 app.use(express.json());
 
 // CORS setup
@@ -25,10 +26,6 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
-app.options("*", cors()); // handle preflight
-
-// Connect to MongoDB
-connectDB();
 
 // Routes
 app.use("/api/partners", partnerRoutes);
