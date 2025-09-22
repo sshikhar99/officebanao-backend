@@ -11,8 +11,11 @@ if (process.env.NODE_ENV !== "production") {
 const app = express();
 app.use(express.json());
 
-// ✅ CORS fix
-app.use(cors());
+
+app.use(cors({
+  origin: "https://officebanao-clone-production.up.railway.app",
+  credentials: true,
+}));
 
 // Handle preflight OPTIONS requests
 app.options("*", cors());
