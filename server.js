@@ -12,16 +12,11 @@ const app = express();
 app.use(express.json());
 
 // ✅ CORS fix
-app.use(
-  cors({
-    origin: [
-      "*",
-    ],
-    methods: ["*"],
-    allowedHeaders: ["*"],
-    credentials: true, // allows cookies if needed
-  })
-);
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 
 // Handle preflight OPTIONS requests
 app.options("*", cors());
