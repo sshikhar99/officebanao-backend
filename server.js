@@ -12,11 +12,7 @@ const app = express();
 app.use(express.json());
 
 // ✅ CORS fix
-app.use(cors({
-  origin: "*",
-  methods: ["*"],
-  allowedHeaders: ["*"]
-}));
+app.use(cors());
 
 // Handle preflight OPTIONS requests
 app.options("*", cors());
