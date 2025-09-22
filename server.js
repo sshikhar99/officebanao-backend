@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import partnerRoutes from "./routes/partnerRoutes.js";
+import partnerRoutes from "./routes/PartnerRoutes.js";
 import connectDB from "./db.js";
 
 // ✅ Load .env only locally
