@@ -12,13 +12,28 @@ const app = express();
 app.use(express.json());
 
 
-app.use(cors({
-  origin: "https://officebanao-clone-production.up.railway.app",
-  credentials: true,
-}));
+// ✅ CORS: allow all (permissive)
+app.use(cors());
 
-// Handle preflight OPTIONS requests
+// Handle preflight OPTIONS requests globally
 app.options("*", cors());
+
+// Fallback OPTIONS responder to avoid 404 on unknown routes
+app.use((req, res, next) => {
+  if (req.method === "OPTIONS") {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+      "Access-Control-Allow-Methods",
+      "GET,POST,PUT,PATCH,DELETE,OPTIONS"
+    );
+    res.header(
+      "Access-Control-Allow-Headers",
+      req.header("Access-Control-Request-Headers") || "Content-Type, Authorization"
+    );
+    return res.sendStatus(204);
+  }
+  next();
+});
 
 connectDB();
 
