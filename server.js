@@ -14,8 +14,8 @@ app.use(express.json());
 // ✅ CORS fix
 app.use(cors({
   origin: "*",
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  methods: ["*"],
+  allowedHeaders: ["*"]
 }));
 
 // Handle preflight OPTIONS requests
